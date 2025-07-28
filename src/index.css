@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Professional font imports */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 
 /* Global styles */
 * {
@@ -16,6 +16,8 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
 }
 
 /* Custom scrollbar */
@@ -29,10 +31,259 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(156, 163, 175, 0.3);
+  background: linear-gradient(135deg, rgba(156, 163, 175, 0.3), rgba(99, 102, 241, 0.3));
   border-radius: 4px;
+  backdrop-filter: blur(10px);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(156, 163, 175, 0.5);
+  background: linear-gradient(135deg, rgba(156, 163, 175, 0.5), rgba(99, 102, 241, 0.5));
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Glassmorphism effect */
+.glass-effect {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-effect-dark {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Modern card effects */
+.modern-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(31, 38, 135, 0.37),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.modern-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 20px 40px rgba(31, 38, 135, 0.2),
+    0 8px 32px rgba(31, 38, 135, 0.37),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.modern-card-dark {
+  background: linear-gradient(145deg, rgba(17, 24, 39, 0.9), rgba(31, 41, 55, 0.8));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(75, 85, 99, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.modern-card-dark:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Gradient backgrounds */
+.gradient-bg {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.gradient-bg-alt {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.gradient-bg-tech {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.gradient-bg-security {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Modern button effects */
+.btn-modern {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-modern:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.btn-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn-modern:hover::before {
+  left: 100%;
+}
+
+/* Code syntax highlighting */
+.code-block {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+  background: linear-gradient(145deg, #1e293b, #0f172a);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 16px;
+  color: #e2e8f0;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: auto;
+  position: relative;
+}
+
+.code-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+/* Shimmer loading effect */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  background-size: 200px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Floating animation for icons */
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Glow effect for important elements */
+.glow-effect {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+/* Custom selection */
+::selection {
+  background: rgba(102, 126, 234, 0.3);
+  color: white;
 }
