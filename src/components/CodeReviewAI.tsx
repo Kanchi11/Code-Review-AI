@@ -493,80 +493,234 @@ if user_id.isdigit():
     };
 
     return (
-        <div className="min-h-screen" style={{ backgroundColor: darkMode ? '#1F2937' : '#DDFBFD' }}>
-            {/* Header - MATCHING YOUR IMAGE EXACTLY */}
-            <div className="bg-gray-800 text-white px-6 py-3">
+        <div className="min-h-screen transition-all duration-500" 
+             style={{ 
+                 background: darkMode 
+                     ? 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' 
+                     : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+             }}>
+            {/* Enhanced Header with Glass Effect */}
+            <div className="glass-dark text-white px-6 py-4 border-b border-white border-opacity-20 animate-slide-down" 
+                 style={{ 
+                     background: 'rgba(0, 0, 0, 0.3)',
+                     backdropFilter: 'blur(20px)'
+                 }}>
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-4 animate-fade-in-left">
                         <div className="flex items-center space-x-2">
-                            <div className="w-3 h-3 bg-gray-600 rounded-full"></div>
-                            <div className="w-3 h-3 bg-gray-600 rounded-full"></div>
+                            <div className="w-3 h-3 bg-gradient-to-r from-green-400 to-blue-500 rounded-full animate-pulse"></div>
+                            <div className="w-3 h-3 bg-gradient-to-r from-yellow-400 to-red-500 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                            <div className="w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
                         </div>
-                        <span className="font-medium">FullPageCodeReviewAI</span>
+                        <span className="font-bold text-xl gradient-text">🤖 AI Code Review</span>
                     </div>
                     
-                    <div className="flex items-center space-x-4">
-                        {/* Enhanced Persona Selector */}
-                        <div className="relative">
+                    <div className="flex items-center space-x-4 animate-fade-in-right">
+                        {/* Enhanced Persona Selector with Glass Effect */}
+                        <div className="relative animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg blur opacity-30 animate-pulse"></div>
                             <select
                                 value={currentPersona}
                                 onChange={(e) => setCurrentPersona(e.target.value as CodeReviewPersona)}
-                                className="appearance-none bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 pr-8 rounded-lg text-sm font-medium border-none focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all
-                                 duration-200  cursor-pointer shadow-lg transition-all duration-200 ease-in-out"
+                                className="relative appearance-none glass text-white px-4 py-2 pr-8 rounded-lg text-sm font-medium border border-white border-opacity-20 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300 cursor-pointer hover:scale-105 hover:shadow-lg backdrop-blur-md"
+                                style={{ 
+                                    background: 'rgba(255, 255, 255, 0.1)',
+                                    backdropFilter: 'blur(10px)'
+                                }}
                             >
                                 {Object.entries(personas).map(([key, persona]) => (
                                     <option key={key} value={key} className="bg-gray-800 text-white">
+                                        {persona.icon && React.createElement(persona.icon, { className: "inline w-4 h-4 mr-2" })}
                                         {persona.name}
                                     </option>
                                 ))}
                             </select>
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                <svg className="w-4 h-4 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-4 h-4 text-blue-200 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                                 </svg>
                             </div>
                         </div>
                         
-                        <div className="flex items-center space-x-2">
+                        {/* Enhanced Controls */}
+                        <div className="flex items-center space-x-3 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+                            <button
+                                onClick={() => setShowSettings(!showSettings)}
+                                className="p-2 rounded-lg glass hover:scale-110 transition-all duration-300 hover:bg-white hover:bg-opacity-20 tooltip"
+                                data-tooltip="Settings"
+                                style={{ 
+                                    background: 'rgba(255, 255, 255, 0.1)',
+                                    backdropFilter: 'blur(10px)'
+                                }}
+                            >
+                                <FiSettings className="w-5 h-5 text-gray-300 hover:text-white transition-colors duration-300" />
+                            </button>
+                            
                             <button
                                 onClick={() => setDarkMode(!darkMode)}
-                                className="p-1 rounded hover:bg-gray-700 transition-colors transition-transform duration-300 hover:rotate-12"
-                                title="Toggle Dark/Light Mode"
+                                className="p-2 rounded-lg glass hover:scale-110 transition-all duration-300 hover:bg-white hover:bg-opacity-20 tooltip"
+                                data-tooltip="Toggle Theme"
+                                style={{ 
+                                    background: 'rgba(255, 255, 255, 0.1)',
+                                    backdropFilter: 'blur(10px)'
+                                }}
                             >
-                                {darkMode ? <IoSunny className="w-5 h-5 text-gray-400" /> : <IoMoon className="w-5 h-5 text-gray-400" />}
+                                {darkMode ? 
+                                    <IoSunny className="w-5 h-5 text-yellow-400 hover:text-yellow-300 transition-all duration-300 animate-bounce-subtle" /> : 
+                                    <IoMoon className="w-5 h-5 text-blue-400 hover:text-blue-300 transition-all duration-300 animate-bounce-subtle" />
+                                }
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Settings Panel - REMOVED */}
+            {/* Enhanced Settings Panel with Glass Morphism */}
+            {showSettings && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center animate-fade-in backdrop-blur-sm">
+                    <div 
+                        className="glass rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl transform animate-slide-down hover-lift"
+                        style={{ 
+                            maxWidth: '500px',
+                            background: darkMode 
+                                ? 'rgba(255, 255, 255, 0.1)' 
+                                : 'rgba(255, 255, 255, 0.95)',
+                            backdropFilter: 'blur(20px)'
+                        }}
+                    >
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-xl font-semibold gradient-text">⚙️ Settings</h3>
+                            <button 
+                                onClick={() => setShowSettings(false)}
+                                className="p-2 rounded-lg hover:bg-gray-100 hover:bg-opacity-20 transition-all duration-200 hover:scale-110"
+                            >
+                                <IoClose className="w-5 h-5" style={{ color: darkMode ? '#E5E7EB' : '#6B7280' }} />
+                            </button>
+                        </div>
+                        
+                        <div className="space-y-6">
+                            {/* Theme Toggle */}
+                            <div className="animate-fade-in-left" style={{ animationDelay: '0.1s' }}>
+                                <label className="block text-sm font-medium mb-3" style={{ color: darkMode ? '#E5E7EB' : '#374151' }}>
+                                    🎨 Theme
+                                </label>
+                                <div className="flex items-center space-x-3">
+                                    <button
+                                        onClick={() => setDarkMode(false)}
+                                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 btn-pulse ${
+                                            !darkMode 
+                                                ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg animate-pulse-glow' 
+                                                : 'bg-gray-100 bg-opacity-20 text-gray-700 hover:bg-opacity-30'
+                                        }`}
+                                    >
+                                        <IoSunny className="w-4 h-4" />
+                                        <span>Light</span>
+                                    </button>
+                                    <button
+                                        onClick={() => setDarkMode(true)}
+                                        className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 hover:scale-105 btn-pulse ${
+                                            darkMode 
+                                                ? 'bg-gradient-to-r from-gray-700 to-gray-900 text-white shadow-lg animate-pulse-glow' 
+                                                : 'bg-gray-100 bg-opacity-20 text-gray-700 hover:bg-opacity-30'
+                                        }`}
+                                    >
+                                        <IoMoon className="w-4 h-4" />
+                                        <span>Dark</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            {/* Language Selection */}
+                            <div className="animate-fade-in-left" style={{ animationDelay: '0.2s' }}>
+                                <label className="block text-sm font-medium mb-3" style={{ color: darkMode ? '#E5E7EB' : '#374151' }}>
+                                    💻 Programming Language
+                                </label>
+                                <select
+                                    value={selectedLanguage}
+                                    onChange={(e) => setSelectedLanguage(e.target.value)}
+                                    className="w-full px-4 py-2 border border-gray-200 border-opacity-30 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 glass hover:scale-105"
+                                    style={{ 
+                                        backgroundColor: darkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.9)', 
+                                        color: darkMode ? '#E5E7EB' : '#1A1A1A'
+                                    }}
+                                >
+                                    {languages.map(lang => (
+                                        <option key={lang} value={lang} style={{ backgroundColor: darkMode ? '#374151' : 'white' }}>
+                                            {lang.charAt(0).toUpperCase() + lang.slice(1)}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            
+                            {/* Auto-scroll Toggle */}
+                            <div className="animate-fade-in-left" style={{ animationDelay: '0.3s' }}>
+                                <label className="flex items-center justify-between">
+                                    <span className="text-sm font-medium" style={{ color: darkMode ? '#E5E7EB' : '#374151' }}>
+                                        🔄 Auto-scroll to new messages
+                                    </span>
+                                    <button
+                                        onClick={() => setShouldAutoScroll(!shouldAutoScroll)}
+                                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-all duration-300 hover:scale-110 ${
+                                            shouldAutoScroll 
+                                                ? 'bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg animate-pulse-glow' 
+                                                : 'bg-gray-300 bg-opacity-50'
+                                        }`}
+                                    >
+                                        <span 
+                                            className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 shadow-md ${
+                                                shouldAutoScroll ? 'translate-x-6' : 'translate-x-1'
+                                            }`}
+                                        />
+                                    </button>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
 
-            {/* Main Content - FIXED SCROLLING LAYOUT */}
-            <div className="flex" style={{ height: 'calc(100vh - 120px)' }}>
+            {/* Main Content - Enhanced Layout with Glass Effects */}
+            <div className="flex p-4 gap-4" style={{ height: 'calc(100vh - 120px)' }}>
                 
-                {/* Left Panel - Code Editor */}
-                <div className="w-1/2 flex flex-col">
+                {/* Left Panel - Code Editor with Glass Effect */}
+                <div className="w-1/2 flex flex-col glass rounded-2xl overflow-hidden animate-fade-in-left shadow-2xl"
+                     style={{ 
+                         background: darkMode 
+                             ? 'rgba(255, 255, 255, 0.05)' 
+                             : 'rgba(255, 255, 255, 0.9)',
+                         backdropFilter: 'blur(20px)',
+                         border: '1px solid rgba(255, 255, 255, 0.2)'
+                     }}>
                     {/* Code Header */}
-                    <div className={`px-6 py-4 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white'}`} style={{ borderRight: '1px solid #E5E7EB' }}>
+                    <div className="px-6 py-4 border-b border-white border-opacity-20 animate-slide-down"
+                         style={{ 
+                             background: darkMode 
+                                 ? 'rgba(255, 255, 255, 0.05)' 
+                                 : 'rgba(255, 255, 255, 0.7)',
+                             backdropFilter: 'blur(10px)'
+                         }}>
                         <div className="flex items-center justify-between mb-4">
-                            <div className="flex items-center space-x-3">
-                                <h2 className={`text-xl font-medium ${darkMode ? 'text-white' : 'text-gray-900'}`} style={{ color: darkMode ? 'white' : '#1A1A1A' }}>Code</h2>
+                            <div className="flex items-center space-x-3 animate-fade-in-up">
+                                <h2 className="text-xl font-medium gradient-text">💻 Code Editor</h2>
                                 {codeChanged && (
-                                    <div className="flex items-center space-x-2 text-orange-500 text-sm">
-                                        <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
-                                        <span>Modified</span>
+                                    <div className="flex items-center space-x-2 text-orange-400 text-sm animate-fade-in-right">
+                                        <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+                                        <span className="font-medium">Modified</span>
                                     </div>
                                 )}
                             </div>
-                            <div className="flex items-center space-x-3">
+                            <div className="flex items-center space-x-3 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                                 <button
                                     onClick={() => fileInputRef.current?.click()}
-                                    className={`flex items-center space-x-2 px-3 py-1.5 text-sm border rounded transition-colors ${
-                                        darkMode 
-                                            ? 'border-gray-600 bg-gray-700 text-gray-300 hover:bg-gray-600' 
-                                            : 'border-gray-300 bg-gray-50 text-gray-700 hover:bg-gray-100'
-                                    }`}
+                                    className="flex items-center space-x-2 px-3 py-2 text-sm glass rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg btn-pulse tooltip"
+                                    data-tooltip="Upload File"
+                                    style={{ 
+                                        background: darkMode 
+                                            ? 'rgba(255, 255, 255, 0.1)' 
+                                            : 'rgba(255, 255, 255, 0.7)',
+                                        color: darkMode ? '#E5E7EB' : '#374151',
+                                        backdropFilter: 'blur(10px)'
+                                    }}
                                     style={ darkMode ? {} : { 
                                         borderColor: '#E5E7EB', 
                                         color: '#1A1A1A',
@@ -600,65 +754,87 @@ if user_id.isdigit():
                             </div>
                         </div>
                         
-                        {/* ANALYZE BUTTON - KEEPING FUNCTIONALITY */}
-                        <div className="flex items-center space-x-3">
+                        {/* Enhanced Analyze Button with Animations */}
+                        <div className="flex items-center space-x-3 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
                             <button
                                 onClick={handleAnalyzeCode}
                                 disabled={!editedCode.trim() || isStreaming}
-                                className="flex items-center space-x-2 px-4 py-2 text-sm font-medium rounded transition-colors"
+                                className={`flex items-center space-x-2 px-6 py-3 text-sm font-bold rounded-xl transition-all duration-300 transform btn-pulse tooltip ${
+                                    !editedCode.trim() || isStreaming 
+                                        ? 'cursor-not-allowed opacity-50' 
+                                        : 'hover:scale-105 hover:shadow-xl animate-pulse-glow'
+                                }`}
+                                data-tooltip={isStreaming ? 'Analyzing...' : 'Start AI Analysis'}
                                 style={{
-                                    backgroundColor: isStreaming || !editedCode.trim() ? '#9CA3AF' : '#BFEFFF',
-                                    color: '#1A1A1A',
-                                    cursor: isStreaming || !editedCode.trim() ? 'not-allowed' : 'pointer'
+                                    background: isStreaming || !editedCode.trim() 
+                                        ? 'linear-gradient(45deg, #9CA3AF, #6B7280)' 
+                                        : 'linear-gradient(45deg, #10B981, #059669)',
+                                    color: 'white',
+                                    boxShadow: !isStreaming && editedCode.trim() ? '0 4px 15px rgba(16, 185, 129, 0.4)' : 'none'
                                 }}
                             >
                                 {isStreaming ? (
                                     <>
-                                        <div className="w-4 h-4 border-2 border-gray-600 border-t-transparent rounded-full animate-spin"></div>
+                                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                                         <span>Analyzing...</span>
+                                        <div className="animate-shimmer"></div>
                                     </>
                                 ) : (
                                     <>
-                                        <IoPlay className="w-4 h-4" />
-                                        <span>Analyze Code</span>
+                                        <IoPlay className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
+                                        <span>🚀 Analyze Code</span>
                                     </>
                                 )}
                             </button>
                             
                             {codeChanged && (
-                                <>
+                                <div className="flex items-center space-x-2 animate-fade-in-right">
                                     <button
                                         onClick={handleSaveCode}
-                                        className="px-3 py-2 text-sm rounded"
-                                        style={{ backgroundColor: '#BFEFFF', color: '#1A1A1A' }}
+                                        className="px-4 py-2 text-sm font-medium glass rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg btn-pulse tooltip"
+                                        data-tooltip="Save Changes"
+                                        style={{ 
+                                            background: 'linear-gradient(45deg, #3B82F6, #1D4ED8)',
+                                            color: 'white',
+                                            boxShadow: '0 4px 15px rgba(59, 130, 246, 0.3)'
+                                        }}
                                     >
-                                        <FiSave className="w-4 h-4 inline mr-1" />
-                                        Save
+                                        <FiSave className="w-4 h-4 inline mr-2" />
+                                        💾 Save
                                     </button>
                                     
                                     <button
                                         onClick={handleResetCode}
-                                        className="px-3 py-2 text-sm rounded"
-                                        style={{ backgroundColor: '#F3F4F6', color: '#1A1A1A' }}
+                                        className="px-4 py-2 text-sm font-medium glass rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg btn-pulse tooltip"
+                                        data-tooltip="Reset to Original"
+                                        style={{ 
+                                            background: 'linear-gradient(45deg, #EF4444, #DC2626)',
+                                            color: 'white',
+                                            boxShadow: '0 4px 15px rgba(239, 68, 68, 0.3)'
+                                        }}
                                     >
-                                        <IoRefresh className="w-4 h-4 inline mr-1" />
-                                        Reset
+                                        <IoRefresh className="w-4 h-4 inline mr-2" />
+                                        🔄 Reset
                                     </button>
-                                </>
+                                </div>
                             )}
                         </div>
                     </div>
                     
-                    {/* Code Editor - PROPER SCROLLING FIXED */}
-                    <div className="flex-1 flex overflow-hidden" style={{ borderRight: '1px solid #E5E7EB' }}>
-                        {/* Line Numbers - SYNCHRONIZED SCROLLING */}
+                    {/* Enhanced Code Editor with Glass Effect */}
+                    <div className="flex-1 flex overflow-hidden rounded-xl">
+                        {/* Enhanced Line Numbers */}
                         <div 
-                            className="w-12 text-right font-mono text-sm py-4 px-2 flex-shrink-0"
+                            className="w-12 text-right font-mono text-sm py-4 px-2 flex-shrink-0 glass animate-fade-in-up"
                             style={{ 
-                                backgroundColor: '#1E1E1E',
-                                color: '#6B7280',
-                                borderRight: '1px solid #374151',
-                                overflow: 'hidden'
+                                background: darkMode 
+                                    ? 'rgba(30, 30, 30, 0.9)' 
+                                    : 'rgba(248, 250, 252, 0.9)',
+                                color: darkMode ? '#6B7280' : '#94A3B8',
+                                borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+                                overflow: 'hidden',
+                                backdropFilter: 'blur(10px)',
+                                animationDelay: '0.6s'
                             }}
                         >
                             <div className="h-full overflow-y-auto" id="line-numbers">
@@ -672,7 +848,7 @@ if user_id.isdigit():
                             </div>
                         </div>
                         
-                        {/* Code Area - FIXED SCROLLING */}
+                        {/* Enhanced Code Area */}
                         <div className="flex-1 relative">
                             <textarea
                                 value={editedCode}
@@ -687,17 +863,34 @@ if user_id.isdigit():
                                         lineNumbers.scrollTop = e.currentTarget.scrollTop;
                                     }
                                 }}
-                                placeholder="Paste your code here..."
-                                className="w-full h-full p-4 font-mono text-sm resize-none focus:outline-none leading-6 absolute inset-0 transition-colors duration-300"
+                                placeholder="✨ Paste your code here and let AI review it for you..."
+                                className="w-full h-full p-4 code-editor text-sm resize-none focus:outline-none leading-6 absolute inset-0 transition-all duration-300 animate-fade-in-up"
                                 style={{ 
-                                    backgroundColor: darkMode ? '#1E1E1E' : '#1E1E1E', // Keep dark for readability
-                                    color: '#FFFFFF',
+                                    background: darkMode 
+                                        ? 'linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%)' 
+                                        : 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+                                    color: darkMode ? '#E5E7EB' : '#1F2937',
                                     tabSize: 4,
                                     border: 'none',
-                                    outline: 'none'
+                                    outline: 'none',
+                                    animationDelay: '0.8s',
+                                    fontFamily: "'JetBrains Mono', 'Fira Code', 'Monaco', monospace"
                                 }}
                                 spellCheck={false}
                             />
+                            
+                            {/* Code Editor Enhancement Overlay */}
+                            {!editedCode.trim() && (
+                                <div className="absolute inset-0 pointer-events-none flex items-center justify-center animate-fade-in-up"
+                                     style={{ animationDelay: '1s' }}>
+                                    <div className="text-center opacity-30">
+                                        <div className="text-4xl mb-2">💻</div>
+                                        <div className="text-sm font-medium" style={{ color: darkMode ? '#9CA3AF' : '#6B7280' }}>
+                                            Upload a file or start typing...
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                     
@@ -725,15 +918,34 @@ if user_id.isdigit():
                     />
                 </div>
 
-                {/* Right Panel - AI Analysis */}
-                <div className="w-1/2 flex flex-col">
-                    {/* Analysis Header */}
-                    <div className={`px-6 py-4 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+                {/* Enhanced Right Panel - AI Analysis */}
+                <div className="w-1/2 flex flex-col glass rounded-2xl overflow-hidden animate-fade-in-right shadow-2xl"
+                     style={{ 
+                         background: darkMode 
+                             ? 'rgba(255, 255, 255, 0.05)' 
+                             : 'rgba(255, 255, 255, 0.9)',
+                         backdropFilter: 'blur(20px)',
+                         border: '1px solid rgba(255, 255, 255, 0.2)'
+                     }}>
+                    {/* Enhanced Analysis Header */}
+                    <div className="px-6 py-4 border-b border-white border-opacity-20 animate-slide-down"
+                         style={{ 
+                             background: darkMode 
+                                 ? 'rgba(255, 255, 255, 0.05)' 
+                                 : 'rgba(255, 255, 255, 0.7)',
+                             backdropFilter: 'blur(10px)',
+                             animationDelay: '0.2s'
+                         }}>
                         <div className="flex items-center justify-between">
-                            <h2 className="text-xl font-medium" style={{ color: darkMode ? 'white' : '#1A1A1A' }}>AI Analysis</h2>
+                            <h2 className="text-xl font-medium gradient-text animate-fade-in-up">🤖 AI Analysis</h2>
                             {editCards.length > 0 && (
-                                <span className="px-2 py-1 text-xs rounded" style={{ backgroundColor: '#BFEFFF', color: '#1A1A1A' }}>
-                                    {editCards.length} suggestions
+                                <span className="px-3 py-1.5 text-xs font-bold rounded-full animate-bounce-subtle"
+                                      style={{ 
+                                          background: 'linear-gradient(45deg, #10B981, #059669)',
+                                          color: 'white',
+                                          boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)'
+                                      }}>
+                                    ✨ {editCards.length} suggestion{editCards.length !== 1 ? 's' : ''}
                                 </span>
                             )}
                         </div>
@@ -748,43 +960,81 @@ if user_id.isdigit():
                             maxHeight: 'calc(100vh - 200px)'
                         }}
                     >
-                        {/* Analysis in Progress */}
+                        {/* Enhanced Analysis in Progress */}
                         {isTyping && !currentText && (
-                            <div 
-                                className="p-4 rounded-lg text-sm"
+                            <div className="glass rounded-xl p-6 text-sm animate-fade-in-up card-hover"
                                 style={{ 
-                                    backgroundColor: 'white',
-                                    color: '#1A1A1A',
-                                    border: '1px solid #E5E7EB'
+                                    background: darkMode 
+                                        ? 'rgba(59, 130, 246, 0.1)' 
+                                        : 'rgba(59, 130, 246, 0.05)',
+                                    border: '1px solid rgba(59, 130, 246, 0.2)',
+                                    backdropFilter: 'blur(10px)'
                                 }}
                             >
-                                <div className="flex items-center space-x-3">
+                                <div className="flex items-center space-x-4">
                                     <div className="flex space-x-1">
-                                        <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></span>
-                                        <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
-                                        <span className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
+                                        <span className="w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-bounce"></span>
+                                        <span className="w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
+                                        <span className="w-3 h-3 bg-gradient-to-r from-pink-400 to-red-500 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
                                     </div>
-                                    <span className="text-sm">
-                                        {personas[currentPersona].name} analyzing your {selectedLanguage} code...
-                                    </span>
+                                    <div className="flex-1">
+                                        <div className="flex items-center space-x-2 mb-1">
+                                            {React.createElement(personas[currentPersona].icon, { 
+                                                className: "w-5 h-5 text-blue-500 animate-pulse" 
+                                            })}
+                                            <span className="font-semibold text-blue-500">
+                                                {personas[currentPersona].name}
+                                            </span>
+                                        </div>
+                                        <span className="text-sm" style={{ color: darkMode ? '#E5E7EB' : '#374151' }}>
+                                            🔍 Analyzing your {selectedLanguage} code for {personas[currentPersona].focus.toLowerCase()}...
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         )}
 
-                        {/* Live Analysis Results */}
+                        {/* Enhanced Live Analysis Results */}
                         {currentText && (
-                            <div 
-                                className="p-4 rounded-lg text-sm"
+                            <div className="glass rounded-xl p-6 text-sm animate-fade-in-up card-hover"
                                 style={{ 
-                                    backgroundColor: 'white',
-                                    color: '#1A1A1A',
-                                    border: '1px solid #E5E7EB'
+                                    background: darkMode 
+                                        ? 'rgba(16, 185, 129, 0.1)' 
+                                        : 'rgba(16, 185, 129, 0.05)',
+                                    border: '1px solid rgba(16, 185, 129, 0.2)',
+                                    backdropFilter: 'blur(10px)'
                                 }}
                             >
-                                <p>
-                                    {currentText}
-                                    {isStreaming && <span className="animate-pulse ml-1 text-blue-400">|</span>}
-                                </p>
+                                <div className="flex items-start space-x-3">
+                                    <div className="flex-shrink-0">
+                                        {React.createElement(personas[currentPersona].icon, { 
+                                            className: "w-5 h-5 text-green-500" 
+                                        })}
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="flex items-center space-x-2 mb-2">
+                                            <span className="font-semibold text-green-500">
+                                                {personas[currentPersona].name}
+                                            </span>
+                                            <span className="text-xs px-2 py-1 rounded-full"
+                                                  style={{ 
+                                                      background: 'rgba(16, 185, 129, 0.2)',
+                                                      color: 'rgb(16, 185, 129)'
+                                                  }}>
+                                                Live Analysis
+                                            </span>
+                                        </div>
+                                        <p className="leading-relaxed" style={{ color: darkMode ? '#E5E7EB' : '#374151' }}>
+                                            {currentText}
+                                            {isStreaming && (
+                                                <span className="inline-flex items-center ml-2">
+                                                    <span className="animate-pulse text-blue-400 font-bold text-lg">|</span>
+                                                    <span className="ml-2 text-xs text-blue-400 animate-bounce-subtle">typing...</span>
+                                                </span>
+                                            )}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         )}
 
