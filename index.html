@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeReview AI - Professional Code Analysis</title>
+    <meta name="description" content="AI-powered code review and analysis tool for developers. Detect security vulnerabilities, performance issues, and code quality problems in real-time." />
+    <meta name="keywords" content="code review, AI, analysis, security, performance, quality, ESLint, developer tools" />
+    <meta name="author" content="CodeReview AI" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://codereview-ai.com/" />
+    <meta property="og:title" content="CodeReview AI - Professional Code Analysis" />
+    <meta property="og:description" content="AI-powered code review and analysis tool for developers" />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://codereview-ai.com/" />
+    <meta property="twitter:title" content="CodeReview AI - Professional Code Analysis" />
+    <meta property="twitter:description" content="AI-powered code review and analysis tool for developers" />
+    <meta property="twitter:image" content="/twitter-image.png" />
+    
+    <!-- Preload fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    
+    <style>
+      /* Critical CSS - Prevent flash of unstyled content */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: #0f172a;
+        color: #f1f5f9;
+        height: 100vh;
+        width: 100vw;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      #root {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        position: relative;
+      }
+      
+      /* Professional loading spinner */
+      .loading-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #0f172a;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+      
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid #334155;
+        border-top: 3px solid #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+      
+      .loading-text {
+        color: #64748b;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      
+      .loading-dots {
+        color: #3b82f6;
+        font-weight: bold;
+        animation: dots 1.5s steps(4, end) infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 0.7; }
+        50% { opacity: 1; }
+      }
+      
+      @keyframes dots {
+        0%, 20% { content: ''; }
+        40% { content: '.'; }
+        60% { content: '..'; }
+        80%, 100% { content: '...'; }
+      }
+      
+      /* Hide loading when React loads */
+      .app-loaded .loading-container {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      
+      /* Smooth fade-in for the app */
+      .App {
+        opacity: 0;
+        animation: fadeInApp 0.5s ease-out 0.2s forwards;
+      }
+      
+      @keyframes fadeInApp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      /* Error boundary styles */
+      .error-boundary {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: #0f172a;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #f1f5f9;
+        text-align: center;
+        padding: 20px;
+      }
+      
+      .error-icon {
+        font-size: 48px;
+        color: #ef4444;
+        margin-bottom: 20px;
+      }
+      
+      .error-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #f1f5f9;
+      }
+      
+      .error-message {
+        font-size: 16px;
+        color: #94a3b8;
+        margin-bottom: 20px;
+        max-width: 500px;
+        line-height: 1.5;
+      }
+      
+      .error-button {
+        background: #3b82f6;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+      
+      .error-button:hover {
+        background: #2563eb;
+      }
+      
+      /* Mobile responsiveness */
+      @media (max-width: 768px) {
+        .loading-text {
+          font-size: 12px;
+        }
+        
+        .loading-spinner {
+          width: 32px;
+          height: 32px;
+        }
+        
+        .error-title {
+          font-size: 20px;
+        }
+        
+        .error-message {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <!-- Professional loading screen -->
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">
+          Initializing CodeReview AI<span class="loading-dots"></span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Error boundary fallback -->
+    <script>
+      // Simple error boundary fallback
+      window.addEventListener('error', function(e) {
+        console.error('Global error:', e.error);
+        
+        const root = document.getElementById('root');
+        if (root && !root.querySelector('.App')) {
+          root.innerHTML = `
+            <div class="error-boundary">
+              <div class="error-icon">⚠️</div>
+              <h1 class="error-title">Something went wrong</h1>
+              <p class="error-message">
+                CodeReview AI encountered an unexpected error. Please refresh the page to try again.
+              </p>
+              <button class="error-button" onclick="window.location.reload()">
+                Refresh Page
+              </button>
+            </div>
+          `;
+        }
+      });
+      
+      // Hide loading screen when React app loads
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          document.body.classList.add('app-loaded');
+        }, 500);
+      });
+      
+      // Performance monitoring
+      if ('performance' in window) {
+        window.addEventListener('load', function() {
+          setTimeout(function() {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            console.log('CodeReview AI loaded in:', Math.round(perfData.loadEventEnd - perfData.fetchStart), 'ms');
+          }, 0);
+        });
+      }
+    </script>
+    
+    <!-- Main React application -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
